@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "819103392540",
+    "project_id": "dayle-database",
+    "storage_bucket": "dayle-database.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819103392540:android:f1e396293ccf892dc190d9",
+        "android_client_info": {
+          "package_name": "com.example.dayle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819103392540-b82odn8977p0p5p5jd63vt8ls9q66v0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5AZ9ydhI2hnDVdf1VDB6rbZzusHAnzr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819103392540-b82odn8977p0p5p5jd63vt8ls9q66v0t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "819103392540-bq1hfpockt7kvt7qi4bigk5og48p7t91.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dayle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
