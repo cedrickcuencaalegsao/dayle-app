@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../shared/App/app.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +17,82 @@ class LoginPageState extends State<LoginPage> {
   bool _obsecureText = true;
   String _errorMessages = '';
   String _success = '';
+
+  Future<void> signInWithGoogle() async {
+    setState(() {
+      _errorMessages = '';
+      _success = 'Signing in with Google...';
+    });
+
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      debugPrint("google user: $googleUser");
+
+      if (googleUser == null) {
+        setState(() {
+          _success = '';
+          _errorMessages = 'Google sign in cancelled';
+        });
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      if (googleAuth.accessToken == null || googleAuth.idToken == null) {
+        setState(() {
+          _success = '';
+          _errorMessages = 'Google authentication failed: Tokens are null';
+        });
+        return;
+      }
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      debugPrint("Cred: $userCredential");
+      
+      if (userCredential.additionalUserInfo?.isNewUser ?? false) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          'firstname': googleUser.displayName?.split(' ').first ?? '',
+          'lastname': googleUser.displayName?.split(' ').last ?? '',
+          'email': googleUser.email,
+          'phone': null,
+          'createdAt': FieldValue.serverTimestamp(),
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      setState(() {
+        _success = 'Google sign in successful!';
+      });
+
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const App(),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('=================================');
+      debugPrint('====== Error: $e');
+      debugPrint('=================================');
+      setState(() {
+        _success = '';
+        _errorMessages = 'Google sign in failed: $e';
+      });
+    }
+  }
 
   Future<void> _signin(String email, String password) async {
     setState(() {
@@ -247,7 +325,7 @@ class LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: signInWithGoogle,
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

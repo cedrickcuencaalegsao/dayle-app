@@ -31,7 +31,7 @@ class HomePageState extends State<HomePage> {
         children: [
           Container(
             width: 100,
-            color: Colors.orange.withOpacity(0.1),
+            color: Colors.orange.withValues(red: 255, green: 165, blue: 0, alpha: 25),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +45,7 @@ class HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
                           color: date.day == DateTime.now().day
-                              ? Colors.orange.withOpacity(0.3)
+                              ? Colors.orange.withValues(red: 255, green: 165, blue: 0, alpha: 77)
                               : Colors.white,
                           border: Border.all(
                             color: date.day == DateTime.now().day

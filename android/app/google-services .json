@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "819103392540-e5co2ka6nbiat9nftodo737u3i10tg03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dayle",
+            "certificate_hash": "9046e57dff3be5244f7ae64602b06192b2f7509e"
+          }
+        },
+        {
           "client_id": "819103392540-b82odn8977p0p5p5jd63vt8ls9q66v0t.apps.googleusercontent.com",
           "client_type": 3
         }
